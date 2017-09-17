@@ -4,14 +4,14 @@ Jenkins Docker container with docker client (Docker outside of Docker : DooD)
 This dockerfile is based on [jenkins/jenkins](https://hub.docker.com/r/jenkins/jenkins/) and install Docker CE with [Docker install Guild](https://docs.docker.com/engine/installation/linux/docker-ce/debian/).
 
 ## Getting Started
-### Build docker image
+### 1. Build docker image
 ```
 $ git clone https://github.com/toto1310/Simple-Jenkins-DooD
 $ cd Simple-Jenkins-DooD
 $ docker build -t myJenkins .
 ```
 
-### Get docker group id in your docker host
+### 2. Get docker group id in your docker host
 - Linux
 ```
 $ grep docker /etc/group
@@ -28,7 +28,7 @@ $ DOCKER_GID= *DOCKER_GID*
 ```
 T.B.D.
 ```
-### Create docker container and Start Jenkins
+### 3. Create docker container and Start Jenkins
 ```
 $ docker run -d --name jenkins \
  -u jenkins:${DOCKER_GID} \
