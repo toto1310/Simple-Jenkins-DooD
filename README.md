@@ -1,5 +1,5 @@
 # Simple-Jenkins-DooD
-Jenkins Docker container with docker client (Docker outside of Docker : DooD)
+This makes you able to run Jenkins in Docker and to run new Docker containers from it.
 
 This dockerfile is based on [jenkins/jenkins](https://hub.docker.com/r/jenkins/jenkins/) and install Docker CE with [Docker install Guild](https://docs.docker.com/engine/installation/linux/docker-ce/debian/).
 
