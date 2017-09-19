@@ -13,7 +13,7 @@ This dockerfile is based on [jenkins/jenkins](https://hub.docker.com/r/jenkins/j
 ```
 $ git clone https://github.com/toto1310/Simple-Jenkins-DooD
 $ cd Simple-Jenkins-DooD
-$ docker build -t myJenkins .
+$ docker build -t simple-jenkins-dood .
 ```
 
 ### 2. Get docker group id in your docker host
@@ -41,7 +41,7 @@ $ docker run -d --name jenkins \
  -v ${PWD}:/var/jenkins_home \
  -p 8080:8080 \
  -p 50000:50000 \
- myJenkins
+ simple-jenkins-dood
 ```
 After a while, you can access http://localhost:8080
 
