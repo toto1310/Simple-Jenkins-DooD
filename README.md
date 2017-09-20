@@ -13,7 +13,7 @@ This dockerfile is based on [jenkins/jenkins](https://hub.docker.com/r/jenkins/j
 - Pull
 
 ```
-$ docker pull docker pull toto1310/simple-jenkins-dood
+$ docker pull toto1310/simple-jenkins-dood
 ```
 
 - Build
