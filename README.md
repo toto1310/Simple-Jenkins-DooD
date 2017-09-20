@@ -9,31 +9,44 @@ for example...
 This dockerfile is based on [jenkins/jenkins](https://hub.docker.com/r/jenkins/jenkins/) and install Docker CE with [Docker install Guild](https://docs.docker.com/engine/installation/linux/docker-ce/debian/).
 
 ## Getting Started
-### 1. Build docker image
+### 1. Pull or Build docker image
+- Pull
+
+```
+$ docker pull docker pull toto1310/simple-jenkins-dood
+```
+
+- Build
+
 ```
 $ git clone https://github.com/toto1310/Simple-Jenkins-DooD
 $ cd Simple-Jenkins-DooD
-$ docker build -t simple-jenkins-dood .
+$ docker build -t toto1310/simple-jenkins-dood .
 ```
 
 ### 2. Get docker group id in your docker host
 - Linux
+
 ```
 $ grep docker /etc/group
 ```
+
 - Mac
+
 ```
 $ docker run -it --rm -v /etc/group:/host-etc-group busybox grep docker host-etc-group
-
 docker:x: *DOCKER_GID* :docker
-
 $ DOCKER_GID= *DOCKER_GID*
 ```
+
 - Windows
+
 ```
 T.B.D.
 ```
+
 ### 3. Create docker container and Start Jenkins
+
 ```
 $ docker run -d --name jenkins \
  -u jenkins:${DOCKER_GID} \
@@ -41,8 +54,9 @@ $ docker run -d --name jenkins \
  -v ${PWD}:/var/jenkins_home \
  -p 8080:8080 \
  -p 50000:50000 \
- simple-jenkins-dood
+ toto1310/simple-jenkins-dood
 ```
+
 After a while, you can access http://localhost:8080
 
 ## License
