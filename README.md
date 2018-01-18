@@ -1,4 +1,6 @@
 # Simple-Jenkins-DooD
+I want to keep my environment **clean**. This helps me.
+
 This makes you able to run Jenkins in Docker and to run new Docker containers for Jenkins jobs in your docker host.
 for example...
 - pull docker images
