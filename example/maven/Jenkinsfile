@@ -18,7 +18,7 @@ pipeline {
                 }
             }
             steps {
-                sh 'mvn -f ${workDir}/pom.xml clean package'
+                sh 'mvn -f example/maven/pom.xml clean package'
             }
         }
 
