@@ -19,65 +19,65 @@ pipeline {
         }
 
         stage('静的コード解析') {
-            steps {
-                parallel(
-                    '静的コード解析' : {
-                        // gradlew 'check -x test'
-
-                        step([
-                            $class: 'CheckStylePublisher',
-                            pattern: "checkstyle/*.xml"
-                        ])
-                        step([
-                            $class: 'FindBugsPublisher',
-                            pattern: "findbugs/*.xml"
-                        ])
-                        step([
-                            $class: 'PmdPublisher',
-                            pattern: "pmd/*.xml"
-                        ])
-                        step([
-                            $class: 'DryPublisher',
-                            pattern: "cpd/*.xml"
-                        ])
-                        step([
-                            $class: 'WarningsPublisher',
-                            consoleParsers: [
-                                [parserName: 'Java Compiler (javac)'],
-                                [parserName: 'Maven'],
+            dir("${workDir}") {
+                steps {
+                    parallel(
+                        '静的コード解析' : {
+                            step([
+                                $class: 'CheckStylePublisher',
+                                pattern: "checkstyle/*.xml"
+                            ])
+                            step([
+                                $class: 'FindBugsPublisher',
+                                pattern: "findbugs/*.xml"
+                            ])
+                            step([
+                                $class: 'PmdPublisher',
+                                pattern: "pmd/*.xml"
+                            ])
+                            step([
+                                $class: 'DryPublisher',
+                                pattern: "cpd/*.xml"
+                            ])
+                            step([
+                                $class: 'WarningsPublisher',
+                                consoleParsers: [
+                                    [parserName: 'Java Compiler (javac)'],
+                                    [parserName: 'Maven'],
+                                ]
+                            ])
+                        },
+                        'ステップカウント': {
+                            stepcounter settings: [
+                                [key:'Java', filePattern: "src/main/java/**/*.java"]
                             ]
-                        ])
-                    },
-                    'ステップカウント': {
-                        stepcounter settings: [
-                            [key:'Java', filePattern: "src/main/java/**/*.java"]
-                        ]
-                    },
-                    'タスクスキャン': {
-                        step([
-                            $class: 'TasksPublisher',
-                            pattern: './**',
-                            ignoreCase: true,
-                            high: 'System.out.System.err',
-                            normal: 'TODO,FIXME,XXX',
-                        ])
-                    }
-                )
+                        },
+                        'タスクスキャン': {
+                            step([
+                                $class: 'TasksPublisher',
+                                pattern: './**',
+                                ignoreCase: true,
+                                high: 'System.out.System.err',
+                                normal: 'TODO,FIXME,XXX',
+                            ])
+                        }
+                    )
+                }
             }
         }
 
 
         stage('テスト') {
-            steps {
-                junit '**/target/surefire-reports/TEST-*.xml'
-                archive 'target/*.jar'
-      
-                // カバレッジレポートを生成（テストクラスを除外）
-                step([
-                    $class: 'JacocoPublisher',
-                    execPattern: "*.exec",
-                    exclusionPattern: '**/*Test.class'
-                ])
+            dir("${workDir}") {
+                steps {
+                    junit '**/target/surefire-reports/TEST-*.xml'
+                    archive 'target/*.jar'
+                    step([
+                        $class: 'JacocoPublisher',
+                        execPattern: "*.exec",
+                        exclusionPattern: '**/*Test.class'
+                    ])
+                }
             }
         }
     }
