@@ -5,16 +5,21 @@ pipeline {
             args '-v $HOME/.m2:/root/.m2'
         }
     }
+    environment {
+        workDir = 'example/maven'
+    }
+
     stages {
         stage('Build') {
-            steps {
-                sh 'mvn -B clean package'
+            dir("${workDir}") {
+                steps {
+                    sh 'mvn -B clean package'
+                }
             }
         }
 
         stage('静的コード解析') {
             steps {
-                // 並列処理の場合はparallelメソッドを使う
                 parallel(
                     '静的コード解析' : {
                         // gradlew 'check -x test'
