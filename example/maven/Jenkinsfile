@@ -1,17 +1,9 @@
 node {
     checkout scm
 
-    stage('Build') {
-        agent {
-            docker {
-                image 
-                args 
-            }
-        }
-        docker.image('maven:3-alpine').inside('-v $HOME/.m2:/root/.m2') {
-            stage('Build') {
-                sh 'mvn -f example/maven/pom.xml clean package'
-            }
+    docker.image('maven:3-alpine').inside('-v $HOME/.m2:/root/.m2') {
+        stage('Build') {
+            sh 'mvn -f example/maven/pom.xml clean package'
         }
     }
 }
