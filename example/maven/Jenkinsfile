@@ -17,7 +17,7 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh 'mvn -B -f ${workDir}/pom.xml clean package'
+                sh 'mvn -f ${workDir}/pom.xml clean package'
             }
         }
 
