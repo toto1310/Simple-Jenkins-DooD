@@ -10,11 +10,14 @@ pipeline {
     }
 
     stages {
+        stage('checkout') {
+            steps {
+                checkout scm
+            }
+        }
         stage('Build') {
             steps {
-                dir("${workDir}") {
-                    sh 'mvn -B -f ${workDir}/pom.xml clean package'
-                }
+                sh 'mvn -B -f ${workDir}/pom.xml clean package'
             }
         }
 
@@ -22,66 +25,57 @@ pipeline {
             steps {
                 parallel(
                     '静的コード解析' : {
-                        dir("${workDir}") {
-                            step([
-                                $class: 'CheckStylePublisher',
-                                pattern: "checkstyle/*.xml"
-                            ])
-                            step([
-                                $class: 'FindBugsPublisher',
-                                pattern: "findbugs/*.xml"
-                            ])
-                            step([
-                                $class: 'PmdPublisher',
-                                pattern: "pmd/*.xml"
-                            ])
-                            step([
-                                $class: 'DryPublisher',
-                                pattern: "cpd/*.xml"
-                            ])
-                            step([
-                                $class: 'WarningsPublisher',
-                                consoleParsers: [
-                                    [parserName: 'Java Compiler (javac)'],
-                                    [parserName: 'Maven'],
-                                ]
-                            ])
-                        }
+                        step([
+                            $class: 'CheckStylePublisher',
+                            pattern: "checkstyle/*.xml"
+                        ])
+                        step([
+                            $class: 'FindBugsPublisher',
+                            pattern: "findbugs/*.xml"
+                        ])
+                        step([
+                            $class: 'PmdPublisher',
+                            pattern: "pmd/*.xml"
+                        ])
+                        step([
+                            $class: 'DryPublisher',
+                            pattern: "cpd/*.xml"
+                        ])
+                        step([
+                            $class: 'WarningsPublisher',
+                            consoleParsers: [
+                                [parserName: 'Java Compiler (javac)'],
+                                [parserName: 'Maven'],
+                            ]
+                        ])
                     },
                     'ステップカウント': {
-                        dir("${workDir}") {
-                            stepcounter settings: [
-                                [key:'Java', filePattern: "src/main/java/**/*.java"]
-                            ]
-                        }
+                        stepcounter settings: [
+                            [key:'Java', filePattern: "${workDir}/src/main/java/**/*.java"]
+                        ]
                     },
                     'タスクスキャン': {
-                        dir("${workDir}") {
-                            step([
-                                $class: 'TasksPublisher',
-                                pattern: './**',
-                                ignoreCase: true,
-                                high: 'System.out.System.err',
-                                normal: 'TODO,FIXME,XXX',
-                            ])
-                        }
+                        step([
+                            $class: 'TasksPublisher',
+                            pattern: '${workDir}/**',
+                            ignoreCase: true,
+                            high: 'System.out.System.err',
+                            normal: 'TODO,FIXME,XXX',
+                        ])
                     }
                 )
             }
         }
 
-
         stage('テスト') {
             steps {
-                dir("${workDir}") {
-                    junit '**/target/surefire-reports/TEST-*.xml'
-                    archive 'target/*.jar'
-                    step([
-                        $class: 'JacocoPublisher',
-                        execPattern: "*.exec",
-                        exclusionPattern: '**/*Test.class'
-                    ])
-                }
+                junit '**/target/surefire-reports/TEST-*.xml'
+                archive 'target/*.jar'
+                step([
+                    $class: 'JacocoPublisher',
+                    execPattern: "*.exec",
+                    exclusionPattern: '**/*Test.class'
+                ])
             }
         }
     }
