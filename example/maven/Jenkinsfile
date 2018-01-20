@@ -11,16 +11,16 @@ pipeline {
 
     stages {
         stage('Build') {
-            dir("${workDir}") {
-                steps {
+            steps {
+                dir("${workDir}") {
                     sh 'mvn -B clean package'
                 }
             }
         }
 
         stage('静的コード解析') {
-            dir("${workDir}") {
-                steps {
+            steps {
+                dir("${workDir}") {
                     parallel(
                         '静的コード解析' : {
                             step([
@@ -68,8 +68,8 @@ pipeline {
 
 
         stage('テスト') {
-            dir("${workDir}") {
-                steps {
+            steps {
+                dir("${workDir}") {
                     junit '**/target/surefire-reports/TEST-*.xml'
                     archive 'target/*.jar'
                     step([
