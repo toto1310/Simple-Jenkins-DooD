@@ -13,7 +13,7 @@ pipeline {
         stage('Build') {
             steps {
                 dir("${workDir}") {
-                    sh 'mvn -B clean package'
+                    sh 'mvn -B -f ${workDir}/pom.xml clean package'
                 }
             }
         }
