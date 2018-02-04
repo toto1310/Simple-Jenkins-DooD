@@ -27,22 +27,12 @@ $ docker build -t toto1310/simple-jenkins-dood .
 ```
 
 ### 2. Get docker group id in your docker host
-- Linux
-
+- Linux or MaxOSX
 ```
-$ grep docker /etc/group
-```
-
-- Mac
-
-```
-$ docker run -it --rm -v /etc/group:/host-etc-group busybox grep docker host-etc-group
-docker:x: *DOCKER_GID* :docker
-$ DOCKER_GID= *DOCKER_GID*
+$ DOCKER_GID=`docker run -it --rm -v /var/run/docker.sock:/var/run/docker.sock toto1310/simple-jenkins-dood bash -c "stat -c %g /var/run/docker.sock"`
 ```
 
 - Windows
-
 ```
 T.B.D.
 ```
@@ -51,7 +41,7 @@ T.B.D.
 
 ```
 $ docker run -d --name jenkins \
- -u jenkins:${DOCKER_GID} \
+ --group-add ${DOCKER_GID} \
  -v /var/run/docker.sock:/var/run/docker.sock \
  -v ${PWD}/jenkins_home:/var/jenkins_home \
  -p 8080:8080 \
