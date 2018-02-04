@@ -47,6 +47,18 @@
 						</dependency>
 					</dependencies>
 				</plugin>
+				<plugin>
+					<groupId>com.github.spotbugs</groupId>
+					<artifactId>spotbugs-maven-plugin</artifactId>
+					<version>3.1.0-RC7</version>
+					<dependencies>
+						<dependency>
+							<groupId>com.github.spotbugs</groupId>
+							<artifactId>spotbugs</artifactId>
+							<version>3.1.1</version>
+						</dependency>
+					</dependencies>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 		<plugins>
@@ -64,6 +76,22 @@
 						<configuration>
 							<encoding>UTF-8</encoding>
 							<failOnViolation>false</failOnViolation>
+						</configuration>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>com.github.spotbugs</groupId>
+				<artifactId>spotbugs-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>validate</id>
+						<phase>validate</phase>
+						<configuration>
+							<failOnError>false</failOnError>
 						</configuration>
 						<goals>
 							<goal>check</goal>
