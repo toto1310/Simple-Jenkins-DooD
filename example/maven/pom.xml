@@ -105,7 +105,7 @@
 							<failOnViolation>false</failOnViolation>
 						</configuration>
 						<goals>
-							<goal>check</goal>
+							<goal>checkstyle</goal>
 						</goals>
 					</execution>
 				</executions>
@@ -115,14 +115,13 @@
 				<artifactId>spotbugs-maven-plugin</artifactId>
 				<executions>
 					<execution>
-						<id>validate</id>
-						<phase>validate</phase>
+						<id>process-classes</id>
+						<phase>process-classes</phase>
 						<configuration>
 							<xmlOutput>true</xmlOutput>
-							<failOnError>false</failOnError>
 						</configuration>
 						<goals>
-							<goal>check</goal>
+							<goal>spotbugs</goal>
 						</goals>
 					</execution>
 				</executions>
@@ -137,9 +136,11 @@
 						<configuration>
 							<sourceEncoding>utf-8</sourceEncoding>
 							<targetJdk>${java.version}</targetJdk>
+							<failOnViolation>false</failOnViolation>
 						</configuration>
 						<goals>
-							<goal>check</goal>
+							<goal>pmd</goal>
+							<goal>cpd</goal>
 						</goals>
 					</execution>
 				</executions>

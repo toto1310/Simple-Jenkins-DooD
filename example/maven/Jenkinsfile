@@ -1,9 +1,59 @@
-node {
-    checkout scm
+pipeline {
+    agent any
+    environment {
+        workDir = 'example/maven'
+    }
 
-    docker.image('maven:3-alpine').inside('-v $HOME/.m2:/root/.m2') {
+    stages {
+        stage('checkout') {
+            steps {
+                checkout scm
+            }
+        }
         stage('Build') {
-            sh 'mvn -f example/maven/pom.xml clean package'
+            agent {
+                docker {
+                    image 'maven:3-alpine'
+                    args '-v $HOME/.m2:/root/.m2'
+                }
+            }
+            steps {
+                sh 'mvn -f example/maven/pom.xml -B clean package'
+           
+                step([
+                    $class: 'CheckStylePublisher',
+                    pattern: "**/checkstyle-result.xml"
+                ])
+                step([
+                    $class: 'FindBugsPublisher',
+                    pattern: "**/spotbugs.xml"
+                ])
+                step([
+                    $class: 'PmdPublisher',
+                    pattern: "**/pmd.xml"
+                ])
+                step([
+                    $class: 'DryPublisher',
+                    pattern: "**/cpd.xml"
+                ])
+                step([
+                    $class: 'WarningsPublisher',
+                    consoleParsers: [
+                        [parserName: 'Java Compiler (javac)'],
+                        [parserName: 'Maven'],
+                    ]
+                ])
+                stepcounter settings: [
+                    [key:'Java', filePattern: "${workDir}/src/main/java/**/*.java"]
+                ]
+                step([
+                    $class: 'TasksPublisher',
+                    pattern: '${workDir}/**',
+                    ignoreCase: true,
+                    high: 'System.out.System.err',
+                    normal: 'TODO,FIXME,XXX',
+                ])
+            }
         }
     }
 }
