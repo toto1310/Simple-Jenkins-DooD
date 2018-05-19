@@ -26,22 +26,10 @@ $ cd Simple-Jenkins-DooD
 $ docker build -t toto1310/simple-jenkins-dood .
 ```
 
-### 2. Get docker group id in your docker host
-- Linux or MaxOSX
-```
-$ DOCKER_GID=`docker run -it --rm -v /var/run/docker.sock:/var/run/docker.sock toto1310/simple-jenkins-dood bash -c "stat -c %g /var/run/docker.sock"`
-```
-
-- Windows
-```
-T.B.D.
-```
-
-### 3. Create docker container and Start Jenkins
+### 2. Create docker container and Start Jenkins
 
 ```
 $ docker run -d --name jenkins \
- --group-add ${DOCKER_GID} \
  -v /var/run/docker.sock:/var/run/docker.sock \
  -v ${PWD}/jenkins_home:/var/jenkins_home \
  -p 8080:8080 \
