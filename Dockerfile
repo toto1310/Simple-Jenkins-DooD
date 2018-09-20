@@ -18,5 +18,5 @@ RUN apt-get update \
     && apt-get install -y docker-ce \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* 
-RUN usermod -aG root jenkins 
+RUN usermod -aG docker jenkins 
 USER jenkins
