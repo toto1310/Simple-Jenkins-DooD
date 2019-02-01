@@ -14,11 +14,15 @@ This dockerfile is based on [jenkins/jenkins](https://hub.docker.com/r/jenkins/j
 ### 1. Pull or Build docker image
 - Pull
 
+From [Docker Hub](https://hub.docker.com/r/toto1310/simple-jenkins-dood/)
+
 ```
 $ docker pull toto1310/simple-jenkins-dood
 ```
 
 - Build
+
+From [Github Repository](https://github.com/toto1310/Simple-Jenkins-DooD)
 
 ```
 $ git clone https://github.com/toto1310/Simple-Jenkins-DooD
@@ -28,12 +32,26 @@ $ docker build -t toto1310/simple-jenkins-dood .
 
 ### 2. Create docker container and Start Jenkins
 
+#### For Linux User
+
 ```
 $ docker run -d --name jenkins \
  -v /var/run/docker.sock:/var/run/docker.sock \
  -v ${PWD}/jenkins_home:/var/jenkins_home \
  -p 8080:8080 \
  -p 50000:50000 \
+ toto1310/simple-jenkins-dood
+```
+
+#### For Mac User
+
+```
+$ docker run -d --name jenkins \
+ -v /var/run/docker.sock:/var/run/docker.sock \
+ -v ${PWD}/jenkins_home:/var/jenkins_home \
+ -p 8080:8080 \
+ -p 50000:50000 \
+ -u root \
  toto1310/simple-jenkins-dood
 ```
 
