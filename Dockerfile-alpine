@@ -1,0 +1,8 @@
+ARG tag=${DOCKER_TAG:-lts-alpine}
+FROM jenkins/jenkins:${tag}
+
+USER root
+RUN apk update \
+    && apk add --no-cache docker
+RUN addgroup -S jenkins docker
+USER jenkins

@@ -8,7 +8,7 @@ for example...
 - build docker images
 - push your docker image
 
-This dockerfile is based on [jenkins/jenkins](https://hub.docker.com/r/jenkins/jenkins/) and install Docker CE with [Docker install Guild](https://docs.docker.com/engine/installation/linux/docker-ce/debian/).
+This dockerfile is based on [jenkins/jenkins](https://hub.docker.com/r/jenkins/jenkins/) and install Docker CE with [Docker install Guide](https://docs.docker.com/engine/installation/linux/docker-ce/debian/) or [Alpine Linux Wiki](https://wiki.alpinelinux.org/wiki/Docker#Installation).
 
 ## Getting Started
 ### 1. Pull or Build docker image
