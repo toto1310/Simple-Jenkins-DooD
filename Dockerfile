@@ -1,4 +1,5 @@
-FROM jenkins/jenkins:lts
+ARG tag=${DOCKER_TAG:-lts}
+FROM jenkins/jenkins:${tag}
 
 USER root
 RUN apt-get update \
