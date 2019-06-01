@@ -10,6 +10,12 @@ for example...
 
 This dockerfile is based on [jenkins/jenkins](https://hub.docker.com/r/jenkins/jenkins/) and install Docker CE with [Docker install Guide](https://docs.docker.com/engine/installation/linux/docker-ce/debian/) or [Alpine Linux Wiki](https://wiki.alpinelinux.org/wiki/Docker#Installation).
 
+## Available docker image tags and Related `Dockerfile` links
+
+- [latest](Dockerfile)
+- [jdk11](Dockerfile), [alpine](Dockerfile-alpine)
+- [lts](Dockerfile), [lts-jdk11](Dockerfile), [lts-slim](Dockerfile), [lts-apline](Dockerfile-alpine)
+
 ## Getting Started
 ### 1. Pull or Build docker image
 - Pull
