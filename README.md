@@ -1,4 +1,6 @@
 # Simple-Jenkins-DooD
+![docker automated build](https://img.shields.io/docker/automated/toto1310/simple-jenkins-dood.svg) ![docker build status](https://img.shields.io/docker/build/toto1310/simple-jenkins-dood.svg) ![docker pull](https://img.shields.io/docker/pulls/toto1310/simple-jenkins-dood.svg)
+
 I want to keep my environment **clean**. This helps me.
 
 This makes you able to run Jenkins in Docker and to run new Docker containers for Jenkins jobs in your docker host.
