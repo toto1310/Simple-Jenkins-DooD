@@ -19,7 +19,7 @@ if [ -z ${DOCKER_TAG##*alpine*} ]; then
 else
     export DOCKER_FILE="Dockerfile"
 fi
-docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} --build-arg tag=${DOCKER_TAG} --file ${DOCKER_FILE} --pull --no-cache .
+docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} --build-arg tag=${DOCKER_TAG} --file ${DOCKER_FILE} --pull ${DOCKER_BUILD_OPS} .
 '''
             }
         }
